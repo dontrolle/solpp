@@ -15,10 +15,10 @@ STRING_LITERAL_FRAG
 	| '\'' (~[\r\n] | '\\\'')*? '\'' ;
 
 PP_LINE_BEGIN
-	: [\t ]* '//' [\t ]* '#' -> skip, pushMode(PP_LINE_MODE) ;
+	: [\t ]* '//' [\t ]* '$' -> skip, pushMode(PP_LINE_MODE) ;
 
 PP_BLOCK_BEGIN
-	: '/*' [\t ]* '#' -> skip, pushMode(PP_BLOCK_MODE) ;
+	: '/*' [\t ]* '$' -> skip, pushMode(PP_BLOCK_MODE) ;
 
 BLOCK_COMMENT
 	: '/*' [\t ]* ~[#\t ] .*? '*/'
