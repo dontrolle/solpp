@@ -21,11 +21,11 @@ PP_BLOCK_BEGIN
 	: '/*' [\t ]* '$' -> skip, pushMode(PP_BLOCK_MODE) ;
 
 BLOCK_COMMENT
-	: '/*' [\t ]* ~[#\t ] .*? '*/'
+	: '/*' [\t ]* ~[$\t ] .*? '*/'
 	| '/*' [\t ]* '*/' ;
 
 LINE_COMMENT
-	: '//' [\t ]* ~[#\t ] .*? EOL_FRAG
+	: '//' [\t ]* ~[$\t ] .*? EOL_FRAG
 	| '//' [\t ]* EOL_FRAG ;
 
 STRING_LITERAL: STRING_LITERAL_FRAG ;
