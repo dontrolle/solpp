@@ -6,7 +6,7 @@ fragment
 EOL_FRAG: [\r\n] |  EOF ;
 
 LINE_COMMENT
-	: ('//' [\t ]* ~[#\t ] .*? EOL_FRAG | '//' [\t ]* EOL_FRAG) -> skip ;
+	: ('//' [\t ]* ~[$\t ] .*? EOL_FRAG | '//' [\t ]* EOL_FRAG) -> skip ;
 
 WS: [\r\n\t ]+ -> skip ;
 
