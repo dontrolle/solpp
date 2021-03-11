@@ -16,7 +16,7 @@
 		"start": "node ./src/solpp"
 	},
 	"dependencies": {
-		"antlr4": "antlr/antlr4/4.9",
+		"antlr4": "~4.8.0",
 		"axios": "^0.18.0",
 		"bn-str-256": "^1.9.1",
 		"commander": "^2.19.0",
