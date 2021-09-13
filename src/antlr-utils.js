@@ -66,9 +66,27 @@ function getNodeRuleName(node) {
 	return cname.substr(cname, cname.length - 'Context'.length);
 }
 
+function addContext(lines,from,loc) {
+	lines = lines.map(s => s.replace('\t',' '));
+	const width = (from+lines.length).toString().length;
+	const toContext = (i,line) => {
+		const istr = i.toString();
+		const res = [' '.repeat(Math.max(0,width-istr.length)) + i + ' ' + line];
+		if (i === loc.line) {
+			const marker = ' '.repeat(1+width+loc.column) + '^';
+		res.push(marker);
+		}
+		return res;
+	 };
+	return lines.flatMap((line,i) => toContext(from+i,line));
+};
+
 class ErrorListener extends antlr.error.ErrorListener {
 	syntaxError(recognizer, offendingSymbol, line, column, message) {
-		throw new Error(`${message} (${line}:${column})`);
+		const stream = offendingSymbol.source[1];
+		const lines = stream.strdata.split(/\r?\n/g).slice(line-3,line+3);
+		const context = addContext(lines,line-3,{line:line-1,column}).join('\n');
+		throw new Error(`${message} (${line}:${column})\n${context}`);
 	}
 }
 
