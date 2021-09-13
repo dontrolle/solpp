@@ -84,8 +84,10 @@ function addContext(lines,from,loc) {
 class ErrorListener extends antlr.error.ErrorListener {
 	syntaxError(recognizer, offendingSymbol, line, column, message) {
 		const stream = offendingSymbol.source[1];
-		const lines = stream.strdata.split(/\r?\n/g).slice(line-3,line+3);
-		const context = addContext(lines,line-3,{line:line-1,column}).join('\n');
+		const startLine = Math.max(line-3,1);
+		const startIndex = startLine - 1;
+		const lines = stream.strdata.split(/\r?\n/g).slice(startIndex,startIndex+6);
+		const context = addContext(lines,startLine,{line,column}).join('\n');
 		throw new Error(`${message} (${line}:${column})\n${context}`);
 	}
 }
