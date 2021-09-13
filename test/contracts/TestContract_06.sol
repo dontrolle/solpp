@@ -8,14 +8,14 @@ contract Base2 { }
 contract TestContract is Base1, Base2 {
 
 	fallback() external payable {
-		// #if EXT_SYMBOL_1
-		// #def RANGE [0, 32]
+		// $if EXT_SYMBOL_1
+		// $def RANGE [0, 32]
 		bytes memory slice = msg.data[$$(RANGE[0]):$$(RANGE[1])];
-		// #endif
-		// #if !(1 - 1)
-		// #def RANGE [32, 64]
+		// $endif
+		// $if !(1 - 1)
+		// $def RANGE [32, 64]
 		bytes memory slice2 = msg.data[$$(RANGE[0]):$$(RANGE[1])];
-		// #endif
+		// $endif
 	}
 
 	function foo() external payable returns (uint256 r) {

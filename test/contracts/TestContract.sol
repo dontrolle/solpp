@@ -9,56 +9,56 @@ import {Poop} from "./PoopContract.sol";
 
 // Some contract.
 contract TestContract {
-	// #if EXT_SYMBOL_1
+	// $if EXT_SYMBOL_1
 	uint256 _var1;
-	// #if EXT_SYMBOL_2 == 100
+	// $if EXT_SYMBOL_2 == 100
 	uint256 _var2 = 1;
-	// #elif EXT_SYMBOL_2 == 10 && EXT_SYMBOL_3
+	// $elif EXT_SYMBOL_2 == 10 && EXT_SYMBOL_3
 	uint256 _var2 = 2;
-	// #elif EXT_SYMBOL_2 == 10
+	// $elif EXT_SYMBOL_2 == 10
 	uint256 _var2 = 4;
-	// #endif
-	// #else
+	// $endif
+	// $else
 	uint256 _var3;
-	// #endif
-	// #if !EXT_SYMBOL_2
+	// $endif
+	// $if !EXT_SYMBOL_2
 	address _a1 = 0x1;
-	// #else
+	// $else
 	address _a2 = 0x2;
-	// #endif
-	// #if EXT_SYMBOL_4 == 1
+	// $endif
+	// $if EXT_SYMBOL_4 == 1
 	// Expect: uint256 _var4 = 508;
 	uint256 _var4 = $$(2**3 + EXT_SYMBOL_4 / 2 * 1000);
-	// #elif EXT_SYMBOL_4 == 2
+	// $elif EXT_SYMBOL_4 == 2
 	// Expect: uint256 _var4 = 1008;
 	uint256 _var4 = $$(2**3 + EXT_SYMBOL_4 / 4 * 2000);
-	// #endif
+	// $endif
 	address _var5;
-	// #define DEF1
-	// #if DEF1
+	// $define DEF1
+	// $if DEF1
 	uint256 _var6;
-	// #endif
-	// #undef DEF1
-	// #if DEF1
+	// $endif
+	// $undef DEF1
+	// $if DEF1
 	uint256 _var7;
-	// #endif
-	// #if !EXT_SYMBOL_3
+	// $endif
+	// $if !EXT_SYMBOL_3
 	bool _b;
-	// #endif
-	// #define DEF2 0
-	// #if DEF2
+	// $endif
+	// $define DEF2 0
+	// $if DEF2
 	bool _c;
-	// #elif DEF2 == 0
+	// $elif DEF2 == 0
 	bool _d;
-	// #if defined(DEF2)
+	// $if defined(DEF2)
 	bool _e;
-	// #endif
-	// #endif
+	// $endif
+	// $endif
 	bool _f = $(OTHER_CONTRACT_SYM_1);
-	// #if !defined(BAD_DEF)
-	// #def DEF3 512
-	// #def FUNC0(x) quote(log(x, 2))
-	// #def DEF4 booger
+	// $if !defined(BAD_DEF)
+	// $def DEF3 512
+	// $def FUNC0(x) quote(log(x, 2))
+	// $def DEF4 booger
 	// Expect: string _str0 = "9" + "256" + "booger";
 	string _str0 = $$(FUNC0(0x200)) + $$(quote(decimal(0x100))) + $$(quote(peek(DEF4)));
 	// Expect: string _str1 = "foo/bar";
@@ -69,7 +69,7 @@ contract TestContract {
 	string _str3 = $$(quote(dp(2**0.5, 8)));
 	// Expect: string _str4 = "Bob Smith";
 	string _str4 = $$(quote(join(["Bob", "Smith"], " ")));
-	// #endif
+	// $endif
 
 	// Expect: bytes32 _bytes0 = 0x666f6f626172;
 	bytes32 _bytes0 = $$(strhex("foobar"));
@@ -90,17 +90,17 @@ contract TestContract {
 	// Expect bytes32 _bytes8 = 0x5fe7f977e71dba2ea1a68e21057beebb9be2ac30c6410aa38d4f3fbe41dcffd2;
 	bytes32 _bytes8 = $$(keccak(1));
 
-	// #def LIST [keccak256("foo"), keccak256("bar"), keccak256(0x34920381af)]
+	// $def LIST [keccak256("foo"), keccak256("bar"), keccak256(0x34920381af)]
 	address _addrs[] = [
-	// #for i, k in LIST
+	// $for i, k in LIST
 		$$(key2addr(i))$$(k == len(LIST) - 1 ? "" : ",")
-	// #done
+	// $done
 	];
 
 	bytes32 _keys[] = [
-		// #for i, k in LIST
+		// $for i, k in LIST
 		$$(LIST[k])$$(k == len(LIST) - 1 ? "" : ",")
-		// #done
+		// $done
 	];
 
 	// Sometimes join is simpler than a for loop.
@@ -112,8 +112,8 @@ contract TestContract {
 	uint8 _u8a[] = $$(filled(3, 1337));
 
 	// Block comment directives.
-	uint256 _sum = 0/* #for I in range(3) */ + $$((I+1)*100)/* #done */;
-	uint256 _sum2 = 0/* #for I in range(1,4) */ + $$(I*100)/* #done */;
+	uint256 _sum = 0/* $for I in range(3) */ + $$((I+1)*100)/* $done */;
+	uint256 _sum2 = 0/* $for I in range(1,4) */ + $$(I*100)/* $done */;
 
 	// Some function.
 	function foo(uint256 i) public view returns (uint256) {
@@ -121,10 +121,10 @@ contract TestContract {
 		uint8 x = $$(hex(uint8(0xabcde)));
 		// Expect: uint8 y = -32277;
 		int16 y = $$(int16(-491029));
-		// #def PRIV_KEY 0x4324a76c910abd0a8c80b596a95aeb623b550f95061939d3314d04e852a22446
+		// $def PRIV_KEY 0x4324a76c910abd0a8c80b596a95aeb623b550f95061939d3314d04e852a22446
 		// Expect: address addr = 0x67606790E4395bd826644b1Bc4f770132C70e39b;
 		address addr = $$(key2addr(PRIV_KEY));
-		// #def ALIAS1 100
+		// $def ALIAS1 100
 		return _var5 + // tail comment
 			// Expected: i + /* inline block comment */ 100;
 			i /* inline block comment */ + $(ALIAS1);
@@ -132,14 +132,14 @@ contract TestContract {
 
 	/* Another function */
 	function bar(uint256 x) internal {
-		// #def ALIAS2 \
+		// $def ALIAS2 \
 		// (10**18 + 2)
-		// #def FUNC1(x) 10**x
-		// #def FUNC2(x, y) x + y
-		// #def FUNC3(x) round(176 / x)
-		// #def FUNC4(x) FUNC2(x, 7) * ALIAS2
-		// #def REDUCER(r, v) v*(r+1)
-		// #def VALS [100, 20, 8]
+		// $def FUNC1(x) 10**x
+		// $def FUNC2(x, y) x + y
+		// $def FUNC3(x) round(176 / x)
+		// $def FUNC4(x) FUNC2(x, 7) * ALIAS2
+		// $def REDUCER(r, v) v*(r+1)
+		// $def VALS [100, 20, 8]
 		_var4 = x *
 			// Expect: 1024 + (10**18 + 2) - 10 /
 			$(EXT_SYMBOL_5) * $(ALIAS2) - $$(log(EXT_SYMBOL_5, 2)) /
@@ -153,12 +153,12 @@ contract TestContract {
 			$$(sum(concat(VALS, [10]))) +
 			// Expect: 2500000000008 + (1 days + 2 hours);
 			$$(FUNC2(2.5 finney, 8)) + ($(FUNC2(1 days, 2 hours)));
-		// #def FUNC5(x, y, z) hex((x + y) * z**10, 20)
+		// $def FUNC5(x, y, z) hex((x + y) * z**10, 20)
 		// Expect: _var5 = 0x000000000000000000000000000003282b0d3000;
 		_var5 = $$(FUNC5(8, 4, 14));
 		// Expect: _var2 = 6;
 		_var2 = $$(1+1*2 - (1+1)/2 + 2**3/2);
-		// #def FUNC6(x) FUNC2(3, x)
+		// $def FUNC6(x) FUNC2(3, x)
 		// Expect: 66 * -256 * 72;
 		_var1 = $$(33 << 1) * $$(-((2**10) >> 2)) * $$(3912 & FUNC6(88-2));
 		// Expect: _b = true && false;
@@ -167,13 +167,13 @@ contract TestContract {
 		_var7 = $$(log(512, 2)) / $$(int(log(10) * 1e7));
 		// Expect: 0xffff21524117
 		_var1 = $$(hex(~0x3 ^ 0xdeadbeef | 0x4 & 0xffffffffffff));
-		// #def STRS ["x", "_var4"]
+		// $def STRS ["x", "_var4"]
 		// Expect: STRS[0] = x + _var4;
 		_var2 = $(STRS[0]) + $$(STRS[1]);
 	}
 
 	function bar2() internal pure returns (bool) {
-		// #def FUNC7(x) quote(x >= 0x100 ? "yes" : "no")
+		// $def FUNC7(x) quote(x >= 0x100 ? "yes" : "no")
 		// Expect: t = "no";
 		string s = $$(FUNC7(100));
 		// Expect: s3 = "yes";
@@ -182,27 +182,27 @@ contract TestContract {
 		string s3 = $$(FUNC7(0x100));
 		// Expect: s4 = "bye";
 		string s4 = $$(quote(0*10 == 0 ? "bye" : "hello"));
-		// #def GREETING(first, last) quote(`Hello, ${first} ${last}!`)
+		// $def GREETING(first, last) quote(`Hello, ${first} ${last}!`)
 		// Expect: s5 = "Hello, Samwise 32!";
 		string s5 = $$(GREETING("Samwise", 2**5));
-		// #def LASTNAME "Gamgee"
+		// $def LASTNAME "Gamgee"
 		// Expect: s6 = "Hello, Samwise Gamgee!";
 		string s6 = $$(GREETING("Samwise", LASTNAME));
 		// Expect: s7 = "foofoofoo";
 		string s7 = $$(quote(repeat("foo", 3)));
-		// #def MULTILINE_DEF I SPAN \
+		// $def MULTILINE_DEF I SPAN \
 		// MULTIPLE LINES
 		// Expect: s8 = "I SPAN MULTIPLE LINES";
 		string s8 = $$(quote(peek(MULTILINE_DEF)));
-		// #def TWO_TO_THE_FIFTH 2**5
+		// $def TWO_TO_THE_FIFTH 2**5
 		// Expect: s9 = "32, 2**5";
 		string s9 = $$(quote(`$${TWO_TO_THE_FIFTH}, ${TWO_TO_THE_FIFTH}`));
-		// #def FILLED_ARRAY(type, count) map(range(count), (i) => `${type}(${i})`)
+		// $def FILLED_ARRAY(type, count) map(range(count), (i) => `${type}(${i})`)
 		// Expect: uint256[3] a = [uint256(0), uint256(1), uint256(3)];
 		uint256[3] a = $$(FILLED_ARRAY(uint256, 3));
-		// #def FOO "foo"
-		// #def FOO2 foo
-		// #def FUNC8(a, b) (a != b)
+		// $def FOO "foo"
+		// $def FOO2 foo
+		// $def FUNC8(a, b) (a != b)
 		// Expect: return false || true ||
 		return $$(bool(BAD_DEF)) || $(EXT_SYMBOL_1) ||
 			// Expect: true || false || true ||

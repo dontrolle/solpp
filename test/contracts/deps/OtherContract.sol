@@ -14,4 +14,4 @@ contract OtherContract {
 	}
 }
 
-// #def OTHER_CONTRACT_SYM_1 true
+// $def OTHER_CONTRACT_SYM_1 true
