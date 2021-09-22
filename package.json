@@ -5,11 +5,8 @@
 	"repository": "https://github.com/merklejerk/solpp",
 	"author": "Lawrence Forman <me@merklejerk.com>",
 	"license": "Apache-2.0",
-	"private": false,
 	"main": "src/index.js",
-	"bin": {
-		"solpp": "src/solpp.js"
-	},
+	"bin": "src/solpp.js",
 	"scripts": {
 		"generate-parser": "./antlr/generate.sh",
 		"test": "mocha --timeout 10000 ./test/*.js",
